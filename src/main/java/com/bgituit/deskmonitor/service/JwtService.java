@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Service
 public class JwtService {
-    @Value("${token.signing.key}")
+    @Value("${org.token.secret}")
     private String jwtSigningKey;
 
     public String extractUserName(String token) {
