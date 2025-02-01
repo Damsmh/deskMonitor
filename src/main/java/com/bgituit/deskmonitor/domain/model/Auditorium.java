@@ -4,6 +4,7 @@ package com.bgituit.deskmonitor.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Entity
 @Builder
 @Getter
@@ -20,6 +21,12 @@ public class Auditorium {
 
     @Column(name = "number", nullable = false, unique = true)
     private Integer number;
+
+    @Column(name = "floor", nullable = false)
+    private Integer floor;
+
+    @Column(name = "size", nullable = false, unique = true)
+    private String size;
 
     @ManyToOne
     private Building building;

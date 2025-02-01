@@ -20,7 +20,7 @@ public class Breakdown {
     @SequenceGenerator(name = "breakdown_id_seq", sequenceName = "breakdown_id_seq", allocationSize = 1)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Computer computer;
 
     @Column(name = "level")

@@ -18,12 +18,11 @@ public class Computer {
     private Long id;
 
     @Column(name = "serialNumber", nullable = false, unique = true)
-    private String serial;
+    private String serialNumber;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Auditorium auditorium;
 
-    @Column(name = "model")
-    private String model;
-
+    @Column(name = "position", nullable = false, unique = true)
+    private String position;
 }

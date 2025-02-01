@@ -56,12 +56,11 @@ public class UserService {
         save(user);
     }
 
-    public ProfileResponse setInfo(ProfileRequest request) {
+    public void setInfo(ProfileRequest request) {
         var user = getCurrentUser();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         save(user);
-        return new ProfileResponse(user.getUsername(), user.getEmail());
     }
 
     public void setRole(Role role) {

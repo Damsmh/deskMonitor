@@ -28,8 +28,8 @@ public class ProfileController {
     @Operation(summary = "Изменение информации о пользователе")
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ProfileResponse setInfo(@RequestBody @Valid ProfileRequest request) {
-        return service.setInfo(request);
+    public void setInfo(@RequestBody @Valid ProfileRequest request) {
+        service.setInfo(request);
     }
 
 }

@@ -2,24 +2,25 @@ package com.bgituit.deskmonitor.domain.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Setter
+@Builder
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "buildings")
 public class Building {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "building_id_seq")
     @SequenceGenerator(name = "building_id_seq", sequenceName = "building_id_seq", allocationSize = 1)
-    private long id;
+    private Long id;
 
     @Column(name = "number", nullable = false, unique = true)
-    private long number;
+    private Integer number;
+
+    @Column(name = "floors", nullable = false, unique = true)
+    private Integer floors;
 }
