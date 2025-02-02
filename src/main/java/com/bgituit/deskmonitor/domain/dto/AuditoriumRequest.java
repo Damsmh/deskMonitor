@@ -1,15 +1,12 @@
 package com.bgituit.deskmonitor.domain.dto;
 
-import com.bgituit.deskmonitor.domain.model.Building;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Schema
+@Schema(description = "Запрос на изменение информации об аудитории")
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuditoriumRequest {

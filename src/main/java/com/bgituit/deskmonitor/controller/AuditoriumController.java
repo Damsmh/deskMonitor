@@ -2,12 +2,8 @@ package com.bgituit.deskmonitor.controller;
 
 
 import com.bgituit.deskmonitor.domain.dto.AuditoriumRequest;
-import com.bgituit.deskmonitor.domain.dto.AuditoriumResponse;
-import com.bgituit.deskmonitor.domain.dto.ProfileRequest;
-import com.bgituit.deskmonitor.domain.dto.ProfileResponse;
 import com.bgituit.deskmonitor.domain.model.Auditorium;
 import com.bgituit.deskmonitor.service.AuditoriumService;
-import com.bgituit.deskmonitor.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -18,19 +14,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.security.authorization.AuthorityAuthorizationManager.hasRole;
-
 @RestController
 @RequestMapping("/aud")
 @RequiredArgsConstructor
 @Tag(name = "Аудитории")
 public class AuditoriumController {
-    private final AuditoriumService service;
+    private final AuditoriumService Auditoriumservice;
 
     @Operation(summary = "Информация обо всех аудиториях")
     @GetMapping("/get-all")
     public @ResponseBody List<Auditorium> getAll() {
-        return service.getAll();
+        return Auditoriumservice.getAll();
     }
 
     @Operation(summary = "Добавить аудиторию (Доступно только админам)")
@@ -38,7 +32,23 @@ public class AuditoriumController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public void add(@RequestBody @Valid AuditoriumRequest request) {
-        service.create(request);
+        Auditoriumservice.create(request);
+    }
+
+    @Operation(summary = "Удалить аудиторию по id (Доступно только админам)")
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Long id) {
+        Auditoriumservice.deleteById(id);
+    }
+
+    @Operation(summary = "Изменить аудиторию (Доступно только админам)")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody @Valid AuditoriumRequest request) {
+        Auditoriumservice.update(request);
     }
 
 }

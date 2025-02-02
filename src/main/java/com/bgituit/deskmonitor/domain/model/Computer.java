@@ -20,7 +20,8 @@ public class Computer {
     @Column(name = "serialNumber", nullable = false, unique = true)
     private String serialNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "auditorium_id", referencedColumnName = "id")
     private Auditorium auditorium;
 
     @Column(name = "position", nullable = false, unique = true)

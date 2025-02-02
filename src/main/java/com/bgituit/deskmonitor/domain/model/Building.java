@@ -4,6 +4,8 @@ package com.bgituit.deskmonitor.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Builder
 @Getter
@@ -16,11 +18,12 @@ public class Building {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "building_id_seq")
     @SequenceGenerator(name = "building_id_seq", sequenceName = "building_id_seq", allocationSize = 1)
-    private Long id;
+    private Integer id;
 
     @Column(name = "number", nullable = false, unique = true)
     private Integer number;
 
     @Column(name = "floors", nullable = false, unique = true)
     private Integer floors;
+
 }

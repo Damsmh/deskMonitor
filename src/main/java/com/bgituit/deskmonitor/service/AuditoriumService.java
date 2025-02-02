@@ -2,14 +2,10 @@ package com.bgituit.deskmonitor.service;
 
 
 import com.bgituit.deskmonitor.domain.dto.AuditoriumRequest;
-import com.bgituit.deskmonitor.domain.dto.AuditoriumResponse;
 import com.bgituit.deskmonitor.domain.model.Auditorium;
-import com.bgituit.deskmonitor.domain.model.Building;
-import com.bgituit.deskmonitor.domain.model.User;
 import com.bgituit.deskmonitor.repository.AuditoriumRepository;
-import com.bgituit.deskmonitor.repository.UserRepository;
+import com.bgituit.deskmonitor.repository.BuildingRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuditoriumService {
     private final AuditoriumRepository repository;
+    private final BuildingRepository BuildingRepository;
 
     public Auditorium save(AuditoriumRequest request) {
         var auditorium = Auditorium.builder()
                 .number(request.getNumber())
                 .floor(request.getFloor())
                 .size(request.getSize())
-                .building(Building.builder()
-                         .number(request.getBuilding())
-                         .floors(4).build())
+                .building(BuildingRepository.getReferenceById(request.getBuilding()))
                 .build();
         return repository.save(auditorium);
     }
@@ -41,9 +36,20 @@ public class AuditoriumService {
 
     public Auditorium getByNumber(Integer number) {
         return repository.findByNumber(number)
-                .orElseThrow(() -> new UsernameNotFoundException("Аудитория не найдена"));
-
+                .orElseThrow(() -> new RuntimeException("Аудитория не найдена"));
     }
 
-    public List<Auditorium> getAll() { return repository.findAll(); };
+    public void update(AuditoriumRequest request) {
+        var auditorium = this.getByNumber(request.getNumber());
+        auditorium.setBuilding(BuildingRepository.getReferenceById(request.getBuilding()));
+        auditorium.setSize(request.getSize());
+        auditorium.setFloor(request.getFloor());
+        repository.save(auditorium);
+    }
+
+    public List<Auditorium> getAll() { return repository.findAll(); }
+
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
 }

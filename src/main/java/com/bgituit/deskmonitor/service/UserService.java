@@ -1,7 +1,6 @@
 package com.bgituit.deskmonitor.service;
 
 import com.bgituit.deskmonitor.domain.dto.ProfileRequest;
-import com.bgituit.deskmonitor.domain.dto.ProfileResponse;
 import com.bgituit.deskmonitor.domain.model.Role;
 import com.bgituit.deskmonitor.domain.model.User;
 import com.bgituit.deskmonitor.repository.UserRepository;
@@ -22,7 +21,6 @@ public class UserService {
 
     public User create(User user) {
         if (repository.existsByUsername(user.getUsername())) {
-            // Заменить на свои исключения
             throw new RuntimeException("Пользователь с таким именем уже существует");
         }
 
@@ -44,7 +42,6 @@ public class UserService {
     }
 
     public User getCurrentUser() {
-        // Получение имени пользователя из контекста Spring Security
         var username = SecurityContextHolder.getContext().getAuthentication().getName();
         return getByUsername(username);
     }
@@ -53,6 +50,13 @@ public class UserService {
     public void getAdmin() {
         var user = getCurrentUser();
         user.setRole(Role.ROLE_ADMIN);
+        save(user);
+    }
+
+    @Deprecated
+    public void getSys() {
+        var user = getCurrentUser();
+        user.setRole(Role.ROLE_SYS);
         save(user);
     }
 

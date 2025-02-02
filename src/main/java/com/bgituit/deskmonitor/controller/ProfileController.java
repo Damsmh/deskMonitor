@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Tag(name = "Профиль")
 public class ProfileController {
-    private final UserService service;
+    private final UserService userService;
 
     @Operation(summary = "Информация о пользователе")
     @GetMapping
     public ProfileResponse getUserInfo() {
-        var user = service.getCurrentUser();
+        var user = userService.getCurrentUser();
         return new ProfileResponse(user.getUsername(), user.getEmail());
     }
 
@@ -29,7 +29,7 @@ public class ProfileController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void setInfo(@RequestBody @Valid ProfileRequest request) {
-        service.setInfo(request);
+        userService.setInfo(request);
     }
 
 }

@@ -20,18 +20,20 @@ public class Breakdown {
     @SequenceGenerator(name = "breakdown_id_seq", sequenceName = "breakdown_id_seq", allocationSize = 1)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "computer_id", referencedColumnName = "id")
     private Computer computer;
 
     @Column(name = "level")
     @Range(min = 1, max = 3)
-    private int level;
+    private Integer level;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Column(name = "isSolved")
-    private boolean isSolved;
+    private Boolean isSolved;
 
     @Column(name = "description")
     private String description;

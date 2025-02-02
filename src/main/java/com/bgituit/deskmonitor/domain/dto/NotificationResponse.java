@@ -1,5 +1,6 @@
 package com.bgituit.deskmonitor.domain.dto;
 
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +13,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "Ответ c информацией о всех аудиториях")
-public class AuditoriumResponse {
-    @Schema(description = "Список аудиторий", example = "...")
-    private List<AuditoriumResponse> auditoriums;
+@Schema(description = "Ответ c информацией о всех уведомлениях")
+public class NotificationResponse {
+    @Schema(description = "Список уведомлений", example = "...")
+    private List<NotificationResponse> notifications;
 }

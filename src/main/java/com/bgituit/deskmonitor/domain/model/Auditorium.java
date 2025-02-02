@@ -4,11 +4,14 @@ package com.bgituit.deskmonitor.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 
 @Entity
 @Builder
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "auditoriums")
@@ -28,7 +31,9 @@ public class Auditorium {
     @Column(name = "size", nullable = false, unique = true)
     private String size;
 
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
 }

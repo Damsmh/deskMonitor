@@ -1,0 +1,50 @@
+package com.bgituit.deskmonitor.controller;
+
+import com.bgituit.deskmonitor.domain.dto.NotificationRequest;
+import com.bgituit.deskmonitor.domain.model.Notification;
+import com.bgituit.deskmonitor.service.NotificationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/notify")
+@RequiredArgsConstructor
+@Tag(name = "Уведомления")
+public class NotificationController {
+    private final NotificationService notificationService;
+
+    @Operation(summary = "Информация о всех уведомлениях")
+    @GetMapping("/get-all")
+    public @ResponseBody List<Notification> getAll() {
+        return notificationService.getAll();
+    }
+
+    @Operation(summary = "Добавить уведомление")
+    @PostMapping("/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void add(@RequestBody @Valid NotificationRequest request) {
+        notificationService.create(request);
+    }
+
+    @Operation(summary = "Удалить уведомление по ID (Доступно только админам)")
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping ("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@PathVariable Long id) {
+        notificationService.deleteById(id);
+    }
+
+    @Operation(summary = "Изменить статус по ID (просмотрено ли)")
+    @PutMapping("/update-status/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@PathVariable Long id) {
+        notificationService.updateStatus(id);
+    }
+}

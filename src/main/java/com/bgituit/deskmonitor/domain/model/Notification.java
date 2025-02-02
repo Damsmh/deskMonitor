@@ -3,6 +3,7 @@ package com.bgituit.deskmonitor.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.engine.internal.Cascade;
 
 @Entity
 @Builder
@@ -18,13 +19,15 @@ public class Notification {
     @SequenceGenerator(name = "notification_id_seq", sequenceName = "notification_id_seq", allocationSize = 1)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "breakdown_id", referencedColumnName = "id")
     private Breakdown breakdown;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Column(name = "isViewed")
-    private boolean isViewed;
+    private Boolean isViewed;
 
 }
