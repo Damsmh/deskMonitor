@@ -13,9 +13,14 @@ import lombok.*;
 public class Computer {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "computer_id_seq")
-    @SequenceGenerator(name = "computer_id_seq", sequenceName = "computer_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "position", nullable = false)
+    private String position;
+
+    @Column(name = "size", nullable = false)
+    private String size;
 
     @Column(name = "serialNumber", nullable = false, unique = true)
     private String serialNumber;
@@ -24,6 +29,5 @@ public class Computer {
     @JoinColumn(name = "auditorium_id", referencedColumnName = "id")
     private Auditorium auditorium;
 
-    @Column(name = "position", nullable = false, unique = true)
-    private String position;
+
 }

@@ -2,6 +2,8 @@ package com.bgituit.deskmonitor.controller;
 
 
 import com.bgituit.deskmonitor.domain.dto.AuditoriumRequest;
+import com.bgituit.deskmonitor.domain.dto.AuditoriumResponse;
+import com.bgituit.deskmonitor.domain.dto.CreateResponse;
 import com.bgituit.deskmonitor.domain.model.Auditorium;
 import com.bgituit.deskmonitor.service.AuditoriumService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,7 +25,7 @@ public class AuditoriumController {
 
     @Operation(summary = "Информация обо всех аудиториях")
     @GetMapping("/get-all")
-    public @ResponseBody List<Auditorium> getAll() {
+    public @ResponseBody AuditoriumResponse getAll() {
         return Auditoriumservice.getAll();
     }
 
@@ -31,8 +33,8 @@ public class AuditoriumController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody @Valid AuditoriumRequest request) {
-        Auditoriumservice.create(request);
+    public CreateResponse add(@RequestBody @Valid AuditoriumRequest request) {
+        return Auditoriumservice.create(request);
     }
 
     @Operation(summary = "Удалить аудиторию по id (Доступно только админам)")

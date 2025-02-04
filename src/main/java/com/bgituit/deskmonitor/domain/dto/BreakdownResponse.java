@@ -1,5 +1,6 @@
 package com.bgituit.deskmonitor.domain.dto;
 
+import com.bgituit.deskmonitor.domain.model.Response.BreakdownResponseModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Schema(description = "Ответ c информацией о всех поломках")
 public class BreakdownResponse {
-    @Schema(description = "Список поломок", example = "...")
-    private List<BreakdownResponse> breakdowns;
+    @Schema(description = "Список поломок")
+    private List<BreakdownResponseModel> breakdowns;
 }

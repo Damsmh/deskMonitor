@@ -14,7 +14,7 @@ public class ComputerRequest {
     private String serialNumber;
 
     @Schema(description = "ID аудитории" , example = "35")
-    private Long auditorium ;
+    private Long auditoriumId;
 
     @Schema(description = "Позиция", example = "125;30")
     private String position;

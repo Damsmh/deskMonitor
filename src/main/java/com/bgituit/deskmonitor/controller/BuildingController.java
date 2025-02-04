@@ -1,6 +1,8 @@
 package com.bgituit.deskmonitor.controller;
 
 import com.bgituit.deskmonitor.domain.dto.BuildingRequest;
+import com.bgituit.deskmonitor.domain.dto.BuildingResponse;
+import com.bgituit.deskmonitor.domain.dto.CreateResponse;
 import com.bgituit.deskmonitor.domain.model.Building;
 import com.bgituit.deskmonitor.service.BuildingService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +24,7 @@ public class BuildingController {
 
     @Operation(summary = "Информация обо всех корпусах")
     @GetMapping("/get-all")
-    public @ResponseBody List<Building> getAll() {
+    public @ResponseBody BuildingResponse getAll() {
         return buildingService.getAll();
     }
 
@@ -30,8 +32,8 @@ public class BuildingController {
     @PreAuthorize("hasRole('ADMIN')")   
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody @Valid BuildingRequest request) {
-        buildingService.create(request);
+    public CreateResponse add(@RequestBody @Valid BuildingRequest request) {
+        return buildingService.create(request);
     }
 
     @Operation(summary = "Удалить корпус по ID (Доступно только админам)")
@@ -42,11 +44,11 @@ public class BuildingController {
         buildingService.deleteById(id);
     }
 
-    @Operation(summary = "Изменить корпус (Доступно только сис-админам)")
-    @PreAuthorize("hasRole('SYS')")
+    @Operation(summary = "Изменить корпус (Доступно только админам)")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@RequestBody @Valid  BuildingRequest request) {
+    public void update(@RequestBody @Valid BuildingRequest request) {
         buildingService.update(request);
     }
 }

@@ -1,6 +1,9 @@
 package com.bgituit.deskmonitor.controller;
 
+import com.bgituit.deskmonitor.domain.dto.CreateResponse;
 import com.bgituit.deskmonitor.domain.dto.NotificationRequest;
+import com.bgituit.deskmonitor.domain.dto.NotificationResponse;
+import com.bgituit.deskmonitor.domain.dto.UpdateBooleanRequest;
 import com.bgituit.deskmonitor.domain.model.Notification;
 import com.bgituit.deskmonitor.service.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/notify")
@@ -22,15 +26,15 @@ public class NotificationController {
 
     @Operation(summary = "Информация о всех уведомлениях")
     @GetMapping("/get-all")
-    public @ResponseBody List<Notification> getAll() {
+    public @ResponseBody NotificationResponse getAll() {
         return notificationService.getAll();
     }
 
     @Operation(summary = "Добавить уведомление")
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody @Valid NotificationRequest request) {
-        notificationService.create(request);
+    public CreateResponse add(@RequestBody @Valid NotificationRequest request) {
+        return notificationService.create(request);
     }
 
     @Operation(summary = "Удалить уведомление по ID (Доступно только админам)")
@@ -42,9 +46,9 @@ public class NotificationController {
     }
 
     @Operation(summary = "Изменить статус по ID (просмотрено ли)")
-    @PutMapping("/update-status/{id}")
+    @PutMapping("/update-status/")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable Long id) {
-        notificationService.updateStatus(id);
+    public void update(@RequestBody @Valid UpdateBooleanRequest request) {
+        notificationService.updateStatus(request);
     }
 }

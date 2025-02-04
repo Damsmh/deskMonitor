@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -46,6 +48,10 @@ public class UserService {
         return getByUsername(username);
     }
 
+    public List<User> getAllProfiles() {
+        return repository.findAll();
+    }
+
     @Deprecated
     public void getAdmin() {
         var user = getCurrentUser();
@@ -66,6 +72,7 @@ public class UserService {
         user.setEmail(request.getEmail());
         save(user);
     }
+
 
     public void setRole(Role role) {
         var user = getCurrentUser();

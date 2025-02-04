@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuditoriumRequest {
-
     @Schema(description = "Номер аудитории", example = "314")
     private Integer number;
 

@@ -1,7 +1,7 @@
 package com.bgituit.deskmonitor.domain.dto;
 
 
-import com.bgituit.deskmonitor.domain.model.Building;
+import com.bgituit.deskmonitor.domain.model.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuildingResponse {
-    @Schema(description = "Список корпусов")
-    private List<Building> buildings;
+@Schema(description = "Ответ c информацией о всех пользователях")
+public class ProfileAllResponse {
+    @Schema(description = "Список пользователей")
+    private List<User> users;
 }

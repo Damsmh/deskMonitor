@@ -1,6 +1,8 @@
 package com.bgituit.deskmonitor.controller;
 
 import com.bgituit.deskmonitor.domain.dto.ComputerRequest;
+import com.bgituit.deskmonitor.domain.dto.ComputerResponse;
+import com.bgituit.deskmonitor.domain.dto.CreateResponse;
 import com.bgituit.deskmonitor.domain.model.Computer;
 import com.bgituit.deskmonitor.service.ComputerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,16 +24,16 @@ public class ComputerController {
 
     @Operation(summary = "Информация о всех компьютерах")
     @GetMapping("/get-all")
-    public @ResponseBody List<Computer> getAll() {
+    public @ResponseBody ComputerResponse getAll() {
         return computerService.getAll();
     }
 
-    @Operation(summary = "Добавить компьютер (Доступно только админам и сис-админам)")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SYS')")
+    @Operation(summary = "Добавить компьютер (Доступно только админам)")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody @Valid ComputerRequest request) {
-        computerService.create(request);
+    public CreateResponse add(@RequestBody @Valid ComputerRequest request) {
+        return computerService.create(request);
     }
 
     @Operation(summary = "Удалить компьютер по ID (Доступно только админам)")
@@ -42,8 +44,8 @@ public class ComputerController {
         computerService.deleteById(id);
     }
 
-    @Operation(summary = "Изменить информацию о компьютере (Доступно только сис-админам и админам)")
-    @PreAuthorize("hasAnyRole('SYS', 'ADMIN')")
+    @Operation(summary = "Изменить информацию о компьютере (Доступно только админам)")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Valid  ComputerRequest request) {

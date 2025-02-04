@@ -1,6 +1,9 @@
 package com.bgituit.deskmonitor.controller;
 
 import com.bgituit.deskmonitor.domain.dto.BreakdownRequest;
+import com.bgituit.deskmonitor.domain.dto.BreakdownResponse;
+import com.bgituit.deskmonitor.domain.dto.CreateResponse;
+import com.bgituit.deskmonitor.domain.dto.UpdateBooleanRequest;
 import com.bgituit.deskmonitor.domain.model.Breakdown;
 import com.bgituit.deskmonitor.service.BreakdownService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,16 +25,16 @@ public class BreakdownController {
 
     @Operation(summary = "Информация о всех поломках")
     @GetMapping("/get-all")
-    public @ResponseBody List<Breakdown> getAll() {
+    public @ResponseBody BreakdownResponse getAll() {
         return breakdownService.getAll();
     }
 
-    @Operation(summary = "Добавить поломку (Доступно только админам и сис-админам)")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SYS')")
+    @Operation(summary = "Добавить поломку (Доступно только админам)")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody @Valid BreakdownRequest request) {
-        breakdownService.create(request);
+    public CreateResponse add(@RequestBody @Valid BreakdownRequest request) {
+        return breakdownService.create(request);
     }
 
     @Operation(summary = "Удалить поломку по ID (Доступно только админам)")
@@ -42,11 +45,11 @@ public class BreakdownController {
         breakdownService.deleteById(id);
     }
 
-    @Operation(summary = "Изменить статус поломки по ID (Доступно только сис-админам)")
-    @PreAuthorize("hasRole('SYS')")
-    @PutMapping("/update-status/{id}")
+    @Operation(summary = "Изменить статус поломки по ID (Доступно только админам)")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/update-status")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable Long id) {
-        breakdownService.updateStatus(id);
+    public void update(@RequestBody UpdateBooleanRequest request) {
+        breakdownService.updateStatus(request);
     }
 }

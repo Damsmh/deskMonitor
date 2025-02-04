@@ -1,5 +1,6 @@
 package com.bgituit.deskmonitor.domain.dto;
 
+import com.bgituit.deskmonitor.domain.model.Response.AuditoriumResponseModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Schema(description = "Ответ c информацией о всех аудиториях")
 public class AuditoriumResponse {
-    @Schema(description = "Список аудиторий", example = "...")
-    private List<AuditoriumResponse> auditoriums;
+    @Schema(description = "Список аудиторий")
+    private List<AuditoriumResponseModel> auditoriums;
 }

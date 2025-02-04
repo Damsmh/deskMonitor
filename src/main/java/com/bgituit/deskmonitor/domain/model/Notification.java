@@ -1,9 +1,9 @@
 package com.bgituit.deskmonitor.domain.model;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.engine.internal.Cascade;
 
 @Entity
 @Builder
@@ -15,19 +15,18 @@ import org.hibernate.engine.internal.Cascade;
 public class Notification {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notification_id_seq")
-    @SequenceGenerator(name = "notification_id_seq", sequenceName = "notification_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "breakdown_id", referencedColumnName = "id")
-    private Breakdown breakdown;
+    @Column(name = "isViewed")
+    private Boolean isViewed;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @Column(name = "isViewed")
-    private Boolean isViewed;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "breakdown_id", referencedColumnName = "id")
+    private Breakdown breakdown;
 
 }

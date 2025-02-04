@@ -1,7 +1,6 @@
 package com.bgituit.deskmonitor.service;
 
-import com.bgituit.deskmonitor.domain.dto.AuditoriumRequest;
-import com.bgituit.deskmonitor.domain.dto.BuildingRequest;
+import com.bgituit.deskmonitor.domain.dto.*;
 import com.bgituit.deskmonitor.domain.model.Auditorium;
 import com.bgituit.deskmonitor.domain.model.Building;
 import com.bgituit.deskmonitor.repository.BuildingRepository;
@@ -24,11 +23,12 @@ public class BuildingService {
         return repository.save(building);
     }
 
-    public Building create(BuildingRequest request) {
+    public CreateResponse create(BuildingRequest request) {
         if (repository.existsByNumber(request.getNumber())) {
             throw new RuntimeException("Корпус с таким номером уже существует");
         }
-        return save(request);
+        var building = save(request);
+        return new CreateResponse(building.getId());
     }
 
     public Building getByNumber(Integer number) {
@@ -43,7 +43,7 @@ public class BuildingService {
         repository.save(building);
     }
 
-    public List<Building> getAll() { return repository.findAll(); }
+    public BuildingResponse getAll() { return new BuildingResponse(repository.findAll()); }
 
     public void deleteById(Integer id) { repository.deleteById(id); }
 

@@ -1,6 +1,6 @@
 package com.bgituit.deskmonitor.domain.dto;
 
-
+import com.bgituit.deskmonitor.domain.model.Response.NotificationResponseModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Schema(description = "Ответ c информацией о всех уведомлениях")
 public class NotificationResponse {
-    @Schema(description = "Список уведомлений", example = "...")
-    private List<NotificationResponse> notifications;
+    @Schema(description = "Список уведомлений")
+    private List<NotificationResponseModel> notifications;
 }

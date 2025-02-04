@@ -1,5 +1,6 @@
 package com.bgituit.deskmonitor.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
@@ -16,21 +17,12 @@ import java.sql.Date;
 public class Breakdown {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "breakdown_id_seq")
-    @SequenceGenerator(name = "breakdown_id_seq", sequenceName = "breakdown_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "computer_id", referencedColumnName = "id")
-    private Computer computer;
 
     @Column(name = "level")
     @Range(min = 1, max = 3)
     private Integer level;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
 
     @Column(name = "isSolved")
     private Boolean isSolved;
@@ -40,6 +32,14 @@ public class Breakdown {
 
     @Column(name = "date")
     private Date date;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "computer_id", referencedColumnName = "id")
+    private Computer computer;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 
 }

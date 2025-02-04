@@ -1,6 +1,7 @@
 package com.bgituit.deskmonitor.controller;
 
 
+import com.bgituit.deskmonitor.domain.dto.ProfileAllResponse;
 import com.bgituit.deskmonitor.domain.dto.ProfileRequest;
 import com.bgituit.deskmonitor.domain.dto.ProfileResponse;
 import com.bgituit.deskmonitor.service.UserService;
@@ -17,6 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Профиль")
 public class ProfileController {
     private final UserService userService;
+
+    @Operation(summary = "Список пользователей")
+    @GetMapping("/get-all")
+    public ProfileAllResponse getAllProfile() {
+        return new ProfileAllResponse(userService.getAllProfiles());
+    }
 
     @Operation(summary = "Информация о пользователе")
     @GetMapping

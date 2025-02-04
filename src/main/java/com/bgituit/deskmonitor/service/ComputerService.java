@@ -1,12 +1,17 @@
 package com.bgituit.deskmonitor.service;
 
-import com.bgituit.deskmonitor.domain.dto.ComputerRequest;
+import com.bgituit.deskmonitor.domain.dto.*;
+import com.bgituit.deskmonitor.domain.model.Breakdown;
 import com.bgituit.deskmonitor.domain.model.Computer;
+import com.bgituit.deskmonitor.domain.model.Response.BreakdownResponseModel;
+import com.bgituit.deskmonitor.domain.model.Response.ComputerResponseModel;
 import com.bgituit.deskmonitor.repository.AuditoriumRepository;
 import com.bgituit.deskmonitor.repository.ComputerRepository;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,17 +22,19 @@ public class ComputerService {
 
     public Computer save(ComputerRequest request) {
         var computer = Computer.builder()
+                .position(request.getPosition())
                 .serialNumber(request.getSerialNumber())
-                .auditorium(auditoriumRepository.getReferenceById(request.getAuditorium()))
+                .auditorium(auditoriumRepository.getReferenceById(request.getAuditoriumId()))
                 .build();
         return repository.save(computer);
     }
 
-    public Computer create(ComputerRequest request) {
+    public CreateResponse create(ComputerRequest request) {
         if (repository.existsBySerialNumber(request.getSerialNumber())) {
             throw new RuntimeException("Компьютер с таким номером уже существует");
         }
-        return save(request);
+        var computer = save(request);
+        return new CreateResponse(computer.getId());
     }
 
     public Computer getBySerialNumber(String number) {
@@ -38,12 +45,26 @@ public class ComputerService {
 
     public void update(ComputerRequest request) {
         var computer = this.getBySerialNumber(request.getSerialNumber());
-        computer.setAuditorium(auditoriumRepository.getReferenceById(request.getAuditorium()));
+        computer.setAuditorium(auditoriumRepository.getReferenceById(request.getAuditoriumId()));
         computer.setPosition(request.getPosition());
         repository.save(computer);
     }
 
-    public List<Computer> getAll() { return repository.findAll(); }
+    public ComputerResponse getAll() {
+        List<Computer> computers = repository.findAll();
+        List<ComputerResponseModel> result = new ArrayList<>();
+        for (Computer computer : computers) {
+            ComputerResponseModel computerR = ComputerResponseModel.builder()
+                    .id(computer.getId())
+                    .serialNumber(computer.getSerialNumber())
+                    .auditoriumId(computer.getAuditorium().getId())
+                    .position(computer.getPosition())
+                    .size(computer.getSize())
+                    .build();
+            result.add(computerR);
+        }
+        return new ComputerResponse(result);
+    }
 
     public void deleteById(Long id) { repository.deleteById(id); }
 }
