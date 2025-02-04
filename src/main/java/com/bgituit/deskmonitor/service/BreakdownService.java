@@ -10,6 +10,7 @@ import com.bgituit.deskmonitor.repository.ComputerRepository;
 import com.bgituit.deskmonitor.repository.UserRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -22,6 +23,7 @@ public class BreakdownService {
     private final BreakdownRepository repository;
     private final ComputerRepository computerRepository;
     private final UserRepository userRepository;
+    private final ApplicationEventPublisher publisher;
 
     public Breakdown save(BreakdownRequest request) {
         var breakdown = Breakdown.builder()
@@ -32,7 +34,19 @@ public class BreakdownService {
                 .level(request.getLevel())
                 .user(userRepository.getReferenceById(request.getUser()))
                 .build();
-        return repository.save(breakdown);
+
+        BreakdownResponseModel breakdownR = BreakdownResponseModel.builder()
+                .id(breakdown.getId())
+                .description(breakdown.getDescription())
+                .date(breakdown.getDate())
+                .isSolved(breakdown.getIsSolved())
+                .computerId(breakdown.getComputer().getId())
+                .userId(breakdown.getUser().getId())
+                .level(breakdown.getLevel())
+                .build();
+        var createdBreakdown = repository.save(breakdown);
+        publisher.publishEvent(breakdownR);
+        return createdBreakdown;
     }
 
     public CreateResponse create(BreakdownRequest request) {

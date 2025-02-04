@@ -1,13 +1,10 @@
 package com.bgituit.deskmonitor.service;
 
 import com.bgituit.deskmonitor.domain.dto.*;
-import com.bgituit.deskmonitor.domain.model.Breakdown;
 import com.bgituit.deskmonitor.domain.model.Computer;
-import com.bgituit.deskmonitor.domain.model.Response.BreakdownResponseModel;
 import com.bgituit.deskmonitor.domain.model.Response.ComputerResponseModel;
 import com.bgituit.deskmonitor.repository.AuditoriumRepository;
 import com.bgituit.deskmonitor.repository.ComputerRepository;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +20,7 @@ public class ComputerService {
     public Computer save(ComputerRequest request) {
         var computer = Computer.builder()
                 .position(request.getPosition())
+                .size(request.getSize())
                 .serialNumber(request.getSerialNumber())
                 .auditorium(auditoriumRepository.getReferenceById(request.getAuditoriumId()))
                 .build();

@@ -19,6 +19,9 @@ public class AuditoriumRequest {
     @Schema(description = "Размер" , example = "40*50")
     private String size;
 
+    @Schema(description = "Позиция" , example = "100;50")
+    private String position;
+
     @Schema(description = "Корпус", example = "1")
     private Integer building;
 }

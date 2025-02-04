@@ -25,6 +25,7 @@ public class AuditoriumService {
                 .number(request.getNumber())
                 .floor(request.getFloor())
                 .size(request.getSize())
+                .position(request.getPosition())
                 .building(BuildingRepository.getReferenceById(request.getBuilding()))
                 .build();
         return repository.save(auditorium);

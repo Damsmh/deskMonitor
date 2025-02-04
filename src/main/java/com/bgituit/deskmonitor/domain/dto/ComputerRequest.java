@@ -18,4 +18,7 @@ public class ComputerRequest {
 
     @Schema(description = "Позиция", example = "125;30")
     private String position;
+
+    @Schema(description = "Размер", example = "125*30")
+    private String size;
 }
