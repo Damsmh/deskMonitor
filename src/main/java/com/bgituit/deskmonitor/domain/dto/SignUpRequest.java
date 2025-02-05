@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Запрос на регистрацию")
+@Schema(description = "Запрос на регистрацию (Доступен только админам)")
 public class SignUpRequest {
 
     @Schema(description = "Имя пользователя", example = "Jon")

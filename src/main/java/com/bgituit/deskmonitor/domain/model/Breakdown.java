@@ -1,6 +1,5 @@
 package com.bgituit.deskmonitor.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;

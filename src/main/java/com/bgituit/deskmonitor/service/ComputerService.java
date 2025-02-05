@@ -41,10 +41,12 @@ public class ComputerService {
 
     }
 
-    public void update(ComputerRequest request) {
-        var computer = this.getBySerialNumber(request.getSerialNumber());
+    public void update(ComputerUpdateRequest request) {
+        var computer = repository.getReferenceById(request.getId());
+        computer.setSerialNumber(request.getSerialNumber());
         computer.setAuditorium(auditoriumRepository.getReferenceById(request.getAuditoriumId()));
         computer.setPosition(request.getPosition());
+        computer.setSize(request.getSize());
         repository.save(computer);
     }
 

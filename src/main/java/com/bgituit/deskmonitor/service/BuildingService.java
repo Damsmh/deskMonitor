@@ -1,14 +1,10 @@
 package com.bgituit.deskmonitor.service;
 
 import com.bgituit.deskmonitor.domain.dto.*;
-import com.bgituit.deskmonitor.domain.model.Auditorium;
 import com.bgituit.deskmonitor.domain.model.Building;
 import com.bgituit.deskmonitor.repository.BuildingRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

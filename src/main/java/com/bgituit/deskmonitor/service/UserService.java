@@ -59,13 +59,6 @@ public class UserService {
         save(user);
     }
 
-    @Deprecated
-    public void getSys() {
-        var user = getCurrentUser();
-        user.setRole(Role.ROLE_SYS);
-        save(user);
-    }
-
     public void setInfo(ProfileRequest request) {
         var user = getCurrentUser();
         user.setUsername(request.getUsername());
@@ -73,7 +66,7 @@ public class UserService {
         save(user);
     }
 
-
+    @Deprecated
     public void setRole(Role role) {
         var user = getCurrentUser();
         user.setRole(role);

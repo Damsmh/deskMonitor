@@ -4,7 +4,6 @@ import com.bgituit.deskmonitor.domain.dto.CreateResponse;
 import com.bgituit.deskmonitor.domain.dto.NotificationRequest;
 import com.bgituit.deskmonitor.domain.dto.NotificationResponse;
 import com.bgituit.deskmonitor.domain.dto.UpdateBooleanRequest;
-import com.bgituit.deskmonitor.domain.model.Notification;
 import com.bgituit.deskmonitor.service.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,9 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/notify")

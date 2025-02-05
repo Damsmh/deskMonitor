@@ -3,6 +3,7 @@ package com.bgituit.deskmonitor.service;
 
 import com.bgituit.deskmonitor.domain.dto.AuditoriumRequest;
 import com.bgituit.deskmonitor.domain.dto.AuditoriumResponse;
+import com.bgituit.deskmonitor.domain.dto.AuditoriumUpdateRequest;
 import com.bgituit.deskmonitor.domain.dto.CreateResponse;
 import com.bgituit.deskmonitor.domain.model.Auditorium;
 import com.bgituit.deskmonitor.domain.model.Response.AuditoriumResponseModel;
@@ -44,8 +45,9 @@ public class AuditoriumService {
                 .orElseThrow(() -> new RuntimeException("Аудитория не найдена"));
     }
 
-    public void update(AuditoriumRequest request) {
-        var auditorium = this.getByNumber(request.getNumber());
+    public void update(AuditoriumUpdateRequest request) {
+        var auditorium = repository.getReferenceById(request.getId());
+        auditorium.setNumber(request.getNumber());
         auditorium.setBuilding(BuildingRepository.getReferenceById(request.getBuilding()));
         auditorium.setSize(request.getSize());
         auditorium.setFloor(request.getFloor());

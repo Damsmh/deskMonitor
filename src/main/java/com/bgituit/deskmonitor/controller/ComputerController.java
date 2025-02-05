@@ -2,6 +2,7 @@ package com.bgituit.deskmonitor.controller;
 
 import com.bgituit.deskmonitor.domain.dto.ComputerRequest;
 import com.bgituit.deskmonitor.domain.dto.ComputerResponse;
+import com.bgituit.deskmonitor.domain.dto.ComputerUpdateRequest;
 import com.bgituit.deskmonitor.domain.dto.CreateResponse;
 import com.bgituit.deskmonitor.service.ComputerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +46,7 @@ public class ComputerController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@RequestBody @Valid  ComputerRequest request) {
+    public void update(@RequestBody @Valid ComputerUpdateRequest request) {
         computerService.update(request);
     }
 }

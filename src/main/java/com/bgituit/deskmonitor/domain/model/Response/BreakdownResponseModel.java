@@ -1,9 +1,6 @@
 package com.bgituit.deskmonitor.domain.model.Response;
 
-import com.bgituit.deskmonitor.domain.model.Computer;
-import com.bgituit.deskmonitor.domain.model.User;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.JoinColumn;
 import lombok.Builder;
 import lombok.Data;
 

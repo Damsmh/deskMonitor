@@ -3,7 +3,6 @@ package com.bgituit.deskmonitor.controller;
 import com.bgituit.deskmonitor.domain.dto.BuildingRequest;
 import com.bgituit.deskmonitor.domain.dto.BuildingResponse;
 import com.bgituit.deskmonitor.domain.dto.CreateResponse;
-import com.bgituit.deskmonitor.domain.model.Building;
 import com.bgituit.deskmonitor.service.BuildingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -3,8 +3,8 @@ package com.bgituit.deskmonitor.controller;
 
 import com.bgituit.deskmonitor.domain.dto.AuditoriumRequest;
 import com.bgituit.deskmonitor.domain.dto.AuditoriumResponse;
+import com.bgituit.deskmonitor.domain.dto.AuditoriumUpdateRequest;
 import com.bgituit.deskmonitor.domain.dto.CreateResponse;
-import com.bgituit.deskmonitor.domain.model.Auditorium;
 import com.bgituit.deskmonitor.service.AuditoriumService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/aud")
@@ -49,7 +47,7 @@ public class AuditoriumController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@RequestBody @Valid AuditoriumRequest request) {
+    public void update(@RequestBody @Valid AuditoriumUpdateRequest request) {
         Auditoriumservice.update(request);
     }
 
