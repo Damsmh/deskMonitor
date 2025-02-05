@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NotificationRequest {
     @Schema(description = "ID поломки", example = "44")
-    private Long breakdown;
+    private Long breakdownId;
 
     @Schema(description = "ID пользователя, которому отправлено", example = "23")
-    private Long user;
+    private Long userId;
 
     @Schema(description = "Просмотрено ли", example = "true")
     private Boolean isViewed;

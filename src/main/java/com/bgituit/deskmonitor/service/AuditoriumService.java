@@ -1,6 +1,5 @@
 package com.bgituit.deskmonitor.service;
 
-
 import com.bgituit.deskmonitor.domain.dto.AuditoriumRequest;
 import com.bgituit.deskmonitor.domain.dto.AuditoriumResponse;
 import com.bgituit.deskmonitor.domain.dto.AuditoriumUpdateRequest;
@@ -23,32 +22,26 @@ public class AuditoriumService {
 
     public Auditorium save(AuditoriumRequest request) {
         var auditorium = Auditorium.builder()
-                .number(request.getNumber())
+                .name(request.getName())
+                .isComputer(request.getIsComputer())
                 .floor(request.getFloor())
                 .size(request.getSize())
                 .position(request.getPosition())
-                .building(BuildingRepository.getReferenceById(request.getBuilding()))
+                .building(BuildingRepository.getReferenceById(request.getBuildingId()))
                 .build();
         return repository.save(auditorium);
     }
 
     public CreateResponse create(AuditoriumRequest request) {
-        if (repository.existsByNumber(request.getNumber())) {
-            throw new RuntimeException("Аудитория с таким номером уже существует");
-        }
         var auditorium = save(request);
         return new CreateResponse(auditorium.getId());
     }
 
-    public Auditorium getByNumber(Integer number) {
-        return repository.findByNumber(number)
-                .orElseThrow(() -> new RuntimeException("Аудитория не найдена"));
-    }
-
     public void update(AuditoriumUpdateRequest request) {
         var auditorium = repository.getReferenceById(request.getId());
-        auditorium.setNumber(request.getNumber());
-        auditorium.setBuilding(BuildingRepository.getReferenceById(request.getBuilding()));
+        auditorium.setIsComputer(request.getIsComputer());
+        auditorium.setName(request.getName());
+        auditorium.setBuilding(BuildingRepository.getReferenceById(request.getBuildingId()));
         auditorium.setSize(request.getSize());
         auditorium.setFloor(request.getFloor());
         repository.save(auditorium);
@@ -60,7 +53,8 @@ public class AuditoriumService {
         for (Auditorium auditorium : auditoriums) {
             AuditoriumResponseModel auditoriumR = AuditoriumResponseModel.builder()
                     .id(auditorium.getId())
-                    .number(auditorium.getNumber())
+                    .name(auditorium.getName())
+                    .isComputer(auditorium.getIsComputer())
                     .floor(auditorium.getFloor())
                     .size(auditorium.getSize())
                     .position(auditorium.getPosition())

@@ -10,8 +10,11 @@ public class AuditoriumResponseModel {
     @Schema(description = "ID аудитории", example = "12")
     private Long id;
 
-    @Schema(description = "Номер аудитории", example = "228")
-    private Integer number;
+    @Schema(description = "Название аудитории", example = "Аудитория 228")
+    private String name;
+
+    @Schema(description = "Тип аудитории", example = "true")
+    private Boolean isComputer;
 
     @Schema(description = "Этаж", example = "2")
     private Integer floor;

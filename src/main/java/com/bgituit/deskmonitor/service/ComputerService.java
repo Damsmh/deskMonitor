@@ -35,6 +35,7 @@ public class ComputerService {
         return new CreateResponse(computer.getId());
     }
 
+    @Deprecated
     public Computer getBySerialNumber(String number) {
         return repository.findBySerialNumber(number)
                 .orElseThrow(() -> new RuntimeException("Компьютер не найден"));

@@ -8,7 +8,4 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AuditoriumRepository extends JpaRepository<Auditorium, Long> {
-    Optional<Auditorium> findByNumber(Integer number);
-    boolean existsByNumber(Integer number);
-}
+public interface AuditoriumRepository extends JpaRepository<Auditorium, Long> {}

@@ -2,6 +2,8 @@ package com.bgituit.deskmonitor.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Builder
@@ -22,12 +24,11 @@ public class Computer {
     @Column(name = "size", nullable = false)
     private String size;
 
-    @Column(name = "serialNumber", nullable = false, unique = true)
+    @Column(name = "serialNumber", nullable = false)
     private String serialNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "auditorium_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "auditorium_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Auditorium auditorium;
-
-
 }

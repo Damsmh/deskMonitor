@@ -21,16 +21,16 @@ public class NotificationService {
 
     public Notification save(NotificationRequest request) {
         var notification = Notification.builder()
-                .breakdown(breakdownRepository.getReferenceById(request.getBreakdown()))
-                .user(userRepository.getReferenceById(request.getUser()))
+                .breakdown(breakdownRepository.getReferenceById(request.getBreakdownId()))
+                .user(userRepository.getReferenceById(request.getUserId()))
                 .isViewed(request.getIsViewed())
                 .build();
         return repository.save(notification);
     }
 
     public CreateResponse create(NotificationRequest request) {
-        if (repository.existsByBreakdown(breakdownRepository.getReferenceById(request.getBreakdown()))
-                && repository.existsByUser(userRepository.getReferenceById(request.getUser()))) {
+        if (repository.existsByBreakdown(breakdownRepository.getReferenceById(request.getBreakdownId()))
+                && repository.existsByUser(userRepository.getReferenceById(request.getUserId()))) {
             throw new RuntimeException("Уведомление с таким номером поломки и пользователем уже существует");
         }
         var notification = save(request);

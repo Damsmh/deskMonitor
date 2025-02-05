@@ -34,7 +34,7 @@ public class BreakdownController {
 
     @GetMapping("/stream")
     public SseEmitter breakdownStream() {
-        SseEmitter sseEmitter = new SseEmitter();
+        SseEmitter sseEmitter = new SseEmitter((long) (1000*60));
         clients.add(sseEmitter);
 
         sseEmitter.onTimeout(() -> clients.remove(sseEmitter));
@@ -45,12 +45,12 @@ public class BreakdownController {
 
     @Async
     @EventListener
-    public void breakdownMessageHandler(Breakdown breakdown) {
+    public void breakdownMessageHandler(BreakdownResponse response) {
         List<SseEmitter> errorEmitters = new ArrayList<>();
 
         clients.forEach(emitter -> {
             try {
-                emitter.send(breakdown, MediaType.APPLICATION_JSON);
+                emitter.send(response, MediaType.APPLICATION_JSON);
             } catch (Exception e) {
                 errorEmitters.add(emitter);
             }
