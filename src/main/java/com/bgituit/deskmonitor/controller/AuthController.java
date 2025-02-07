@@ -18,10 +18,10 @@ public class AuthController {
     private final AuthenticationService authenticationService;
     private final JwtService jwtService;
 
-    @Operation(summary = "Регистрация пользователя")
+    @Operation(summary = "Регистрация пользователя (Доступно только админам)")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/sign-up")
-    public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request) {
+    public ProfileResponse signUp(@RequestBody @Valid SignUpRequest request) {
         return authenticationService.signUp(request);
     }
 

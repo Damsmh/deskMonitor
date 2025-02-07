@@ -43,7 +43,7 @@ public class UserService {
     }
 
     public User getCurrentUser() {
-        var username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return getByUsername(username);
     }
 
@@ -52,7 +52,15 @@ public class UserService {
     }
 
     public void setInfo(ProfileRequest request) {
-        var user = getCurrentUser();
+        User user = getCurrentUser();
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        save(user);
+    }
+
+    public void setInfoById(Long id, ProfileRequest request) {
+        User user = repository.getReferenceById(id);
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());

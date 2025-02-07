@@ -32,6 +32,7 @@ public class BreakdownController {
     private final Set<SseEmitter> clients = new CopyOnWriteArraySet<>();
 
     @GetMapping("/stream")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public SseEmitter breakdownStream() {
         SseEmitter sseEmitter = new SseEmitter((long) (1000*60));
         clients.add(sseEmitter);

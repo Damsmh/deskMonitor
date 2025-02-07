@@ -1,6 +1,7 @@
 package com.bgituit.deskmonitor.service;
 
 import com.bgituit.deskmonitor.domain.dto.JwtAuthenticationResponse;
+import com.bgituit.deskmonitor.domain.dto.ProfileResponse;
 import com.bgituit.deskmonitor.domain.dto.SignInRequest;
 import com.bgituit.deskmonitor.domain.dto.SignUpRequest;
 import com.bgituit.deskmonitor.domain.model.User;
@@ -18,7 +19,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationResponse signUp(SignUpRequest request) {
+    public ProfileResponse signUp(SignUpRequest request) {
 
         var user = User.builder()
                 .username(request.getUsername())
@@ -28,9 +29,7 @@ public class AuthenticationService {
                 .build();
 
         userService.create(user);
-
-        var jwt = jwtService.generateToken(user);
-        return new JwtAuthenticationResponse(jwt);
+        return new ProfileResponse(user.getUsername(), user.getEmail(), user.getRole());
     }
 
     public JwtAuthenticationResponse signIn(SignInRequest request) {

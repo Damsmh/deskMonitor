@@ -1,6 +1,5 @@
 package com.bgituit.deskmonitor.controller;
 
-
 import com.bgituit.deskmonitor.domain.dto.ProfileAllResponse;
 import com.bgituit.deskmonitor.domain.dto.ProfileRequest;
 import com.bgituit.deskmonitor.domain.dto.ProfileResponse;
@@ -39,7 +38,7 @@ public class ProfileController {
     @GetMapping
     public ProfileResponse getUserInfo() {
         var user = userService.getCurrentUser();
-        return new ProfileResponse(user.getUsername(), user.getEmail());
+        return new ProfileResponse(user.getUsername(), user.getEmail(), user.getRole());
     }
 
     @Operation(summary = "Изменение информации о пользователе")
@@ -50,4 +49,11 @@ public class ProfileController {
         userService.setInfo(request);
     }
 
+    @Operation(summary = "Изменение информации о пользователе по ID (Доступно только админам)")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void setInfoById(@PathVariable Long id, @RequestBody @Valid ProfileRequest request) {
+        userService.setInfoById(id, request);
+    }
 }
