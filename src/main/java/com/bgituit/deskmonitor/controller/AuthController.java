@@ -5,9 +5,9 @@ import com.bgituit.deskmonitor.service.AuthenticationService;
 import com.bgituit.deskmonitor.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +19,7 @@ public class AuthController {
     private final JwtService jwtService;
 
     @Operation(summary = "Регистрация пользователя")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/sign-up")
     public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request) {
         return authenticationService.signUp(request);
@@ -31,6 +32,7 @@ public class AuthController {
     }
 
     @Operation(summary = "Проверка валидности токена")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/valid")
     public @ResponseBody JwtValidResponse valid() {
         return jwtService.TokenValid();

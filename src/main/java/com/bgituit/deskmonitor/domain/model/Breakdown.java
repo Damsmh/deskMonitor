@@ -25,7 +25,7 @@ public class Breakdown {
     @Range(min = 1, max = 3)
     private Integer level;
 
-    @Column(name = "isSolved")
+    @Column(name = "is_solved", nullable = false)
     private Boolean isSolved;
 
     @Column(name = "description")

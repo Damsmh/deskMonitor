@@ -1,7 +1,6 @@
 package com.bgituit.deskmonitor.service;
 
 import com.bgituit.deskmonitor.domain.dto.ProfileRequest;
-import com.bgituit.deskmonitor.domain.model.Role;
 import com.bgituit.deskmonitor.domain.model.User;
 import com.bgituit.deskmonitor.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -52,24 +51,13 @@ public class UserService {
         return repository.findAll();
     }
 
-    @Deprecated
-    public void getAdmin() {
-        var user = getCurrentUser();
-        user.setRole(Role.ROLE_ADMIN);
-        save(user);
-    }
-
     public void setInfo(ProfileRequest request) {
         var user = getCurrentUser();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
         save(user);
     }
 
-    @Deprecated
-    public void setRole(Role role) {
-        var user = getCurrentUser();
-        user.setRole(role);
-        save(user);
-    }
+    public void deleteById(Long id) { repository.deleteById(id); }
 }

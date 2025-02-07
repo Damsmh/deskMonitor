@@ -28,6 +28,7 @@ public class NotificationController {
 
     @Operation(summary = "Добавить уведомление")
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.CREATED)
     public CreateResponse add(@RequestBody @Valid NotificationRequest request) {
         return notificationService.create(request);
@@ -42,6 +43,7 @@ public class NotificationController {
     }
 
     @Operation(summary = "Изменить статус по ID (просмотрено ли)")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PutMapping("/update-status/")
     @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Valid UpdateBooleanRequest request) {

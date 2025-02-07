@@ -14,6 +14,10 @@ public class ProfileRequest {
     private String username;
 
     @Schema(description = "Почта", example = "jon@gmail.com")
-    @Size(max = 255, message = "Длина пароля должна быть до 255 символов")
+    @Size(max = 255, message = "Длина почты должна быть до 255 символов")
     private String email;
+
+    @Schema(description = "Пароль", example = "passwordexample")
+    @Size(max = 255, message = "Длина пароля должна быть до 255 символов")
+    private String password;
 }

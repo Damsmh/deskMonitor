@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,7 +26,16 @@ public class ProfileController {
         return new ProfileAllResponse(userService.getAllProfiles());
     }
 
+    @Operation(summary = "Удаление пользователя по ID")
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@PathVariable Long id) {
+        userService.deleteById(id);
+    }
+
     @Operation(summary = "Информация о пользователе")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public ProfileResponse getUserInfo() {
         var user = userService.getCurrentUser();
@@ -33,7 +43,8 @@ public class ProfileController {
     }
 
     @Operation(summary = "Изменение информации о пользователе")
-    @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void setInfo(@RequestBody @Valid ProfileRequest request) {
         userService.setInfo(request);

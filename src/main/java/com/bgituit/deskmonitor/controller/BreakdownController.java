@@ -4,7 +4,6 @@ import com.bgituit.deskmonitor.domain.dto.BreakdownRequest;
 import com.bgituit.deskmonitor.domain.dto.BreakdownResponse;
 import com.bgituit.deskmonitor.domain.dto.CreateResponse;
 import com.bgituit.deskmonitor.domain.dto.UpdateBooleanRequest;
-import com.bgituit.deskmonitor.domain.model.Breakdown;
 import com.bgituit.deskmonitor.service.BreakdownService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -65,8 +64,8 @@ public class BreakdownController {
         return breakdownService.getAll();
     }
 
-    @Operation(summary = "Добавить поломку (Доступно только админам)")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @Operation(summary = "Добавить поломку")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public CreateResponse add(@RequestBody @Valid BreakdownRequest request) {

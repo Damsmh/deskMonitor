@@ -3,7 +3,6 @@ package com.bgituit.deskmonitor.service;
 import com.bgituit.deskmonitor.domain.dto.JwtAuthenticationResponse;
 import com.bgituit.deskmonitor.domain.dto.SignInRequest;
 import com.bgituit.deskmonitor.domain.dto.SignUpRequest;
-import com.bgituit.deskmonitor.domain.model.Role;
 import com.bgituit.deskmonitor.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,7 +24,7 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.ROLE_USER)
+                .role(request.getRole())
                 .build();
 
         userService.create(user);

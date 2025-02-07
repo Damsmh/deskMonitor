@@ -2,7 +2,6 @@ package com.bgituit.deskmonitor.service;
 
 import com.bgituit.deskmonitor.domain.dto.JwtValidResponse;
 import com.bgituit.deskmonitor.domain.model.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -74,7 +73,6 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    @Deprecated
     public JwtValidResponse TokenValid() {
         return new JwtValidResponse(true);
     }
